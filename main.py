@@ -3,41 +3,37 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # A ticker is one stock
-tickers = ['NVDA','ARM']
+tickers = ['NVDA']
 
 # Fetch historical data
-stocksData = yf.download(tickers, period = "1mo")
+stocksData = yf.download(tickers, period = "30d")
 
 # Select close prices and volumes
-close_prices = stocksData['Adj Close'] / stocksData['Adj Close'].mean()
+close_prices = stocksData['Adj Close'] #/ stocksData['Adj Close'].mean()
 volumes = stocksData['Volume']
 
+# Calculating the daily change in precentages
+daily_returns = (close_prices.pct_change()* 100)
+
+close_prices.info()
+#volumes.info()
+#daily_returns.info()
+
+def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (10, 5)):
+        plt.figure(figsize=size)
+        data_item.plot()
+        plt.title(title_plt)
+        plt.xlabel(xlable_plt)
+        plt.ylabel(ylabel_plt)
+        plt.legend(tickers)
+        plt.show()
+
+ 
 # Plot close prices
-plt.figure(figsize=(10, 10))
-close_prices.plot()
-plt.title('Close Prices')
-plt.xlabel('Date')
-plt.ylabel('Price')
-plt.legend(tickers)
-#plt.show()
+plotShow(close_prices, "Close Prices", "Date", "Price")
 
 # Plot volumes
-plt.figure(figsize=(10, 5))
-volumes.plot()
-plt.title('Volumes Traded')
-plt.xlabel('Date')
-plt.ylabel('Volume')
-plt.legend(tickers)
-#plt.show()
+plotShow(volumes, "Volumes Traded", "Date", "Volume")
 
-# Calculate daily returns
-daily_returns = close_prices.pct_change()
-
-# Plot daily returns
-plt.figure(figsize=(10, 5))
-daily_returns.plot()
-plt.title('Daily Returns')
-plt.xlabel('Date')
-plt.ylabel('Return')
-plt.legend(tickers)
-#plt.show()
+# Plot daily change
+plotShow(daily_returns, "Daily Returns", "Date", "Change")
