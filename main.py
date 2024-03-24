@@ -1,24 +1,23 @@
 import yfinance as yf
-#import pandas as pd
-#import matplotlib.pyplot as plt
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
-# A ticker is one stock
-tickers = ['NVDA']
+def min_max_scaling(data):
+    min_val = np.min(data)
+    max_val = np.max(data)
+    scaled_data = (data - min_val) / (max_val - min_val)
+    return scaled_data
 
-# Fetch historical data
-df_stocksData = yf.download(tickers, period = "365d")
 
-
-# Select relevant columns from the data frame
-df_close_prices2 = df_stocksData['Close']
-print(df_close_prices2.tail(20))
-df_close_prices = df_stocksData['Adj Close'] #/ stocksData['Adj Close'].mean()
-
-df_volumes = df_stocksData['Volume']
-
-#calculations
-# Calculating the daily change in precentages
-df_daily_returns = (df_close_prices.pct_change()* 100)
+def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (10, 5)):
+        plt.figure(figsize=size)
+        data_item.plot()
+        plt.title(title_plt)
+        plt.xlabel(xlable_plt)
+        plt.ylabel(ylabel_plt)
+        plt.legend(tickers)
+        plt.savefig(f"{title_plt}.png")
 
 def calculate_rsi(data, window=14):
    # Calculate price changes
@@ -38,64 +37,38 @@ def calculate_rsi(data, window=14):
     # Calculate RSI
     rsi = 100 - (100 / (1 + rs))
     
-    return rsi.tail(5)
-
-rsi_result = calculate_rsi(df_close_prices)
-print(rsi_result)
-#rsi_result.info()
-#volumes.info()
-#daily_returns.info()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (10, 5)):
-        plt.figure(figsize=size)
-        data_item.plot()
-        plt.title(title_plt)
-        plt.xlabel(xlable_plt)
-        plt.ylabel(ylabel_plt)
-        plt.legend(tickers)
-        plt.show()
-
+    return rsi.tail(1)
  
-# Plot close prices
-plotShow(close_prices, "Close Prices", "Date", "Price")
 
-# Plot volumes
-plotShow(volumes, "Volumes Traded", "Date", "Volume")
+# A ticker is one stock
+tickers = ['NVDA','ARM','AMD','MSFT']
 
-# Plot daily change
-plotShow(daily_returns, "Daily Returns", "Date", "Change")
-"""
+#Data manipulation
+
+# Selecting relevant columns from the data frame and scaling them 
+df_close_prices = yf.download(tickers, period = "6mo")['Adj Close']
+df_volumes = yf.download(tickers, period = "6mo")['Volume']
+scalled_close_prices = df_close_prices / df_close_prices.iloc[0,:]
+scalled_volumes = df_volumes / df_volumes.iloc[0,:]
+
+#calculations
+# Calculating the daily change in precentages
+df_daily_returns = (df_close_prices.pct_change()* 100)
+df_rsi_result = calculate_rsi(df_close_prices)
+
+
+
+#Visualization
+
+
+# Plotting close prices for all stocks 
+plotShow(scalled_close_prices, "Close Prices", "Date", "Price")
+
+#Plotting volume for each stock
+plotShow(scalled_volumes, "Volumes Traded", "Date", "Volume")
+
+# Plotting daily change
+plotShow(df_daily_returns, "Daily Returns", "Date", "Change in %")
+
+#Plotting RSI measure for each stock
+plotShow(df_rsi_result, "RSI in last 14 days", "Date", "Change in %")
