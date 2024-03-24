@@ -1,13 +1,6 @@
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
-
-def min_max_scaling(data):
-    min_val = np.min(data)
-    max_val = np.max(data)
-    scaled_data = (data - min_val) / (max_val - min_val)
-    return scaled_data
 
 
 def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (10, 5)):
@@ -37,7 +30,7 @@ def calculate_rsi(data, window=14):
     # Calculate RSI
     rsi = 100 - (100 / (1 + rs))
     
-    return rsi.tail(1)
+    return rsi
  
 
 # A ticker is one stock
@@ -46,15 +39,16 @@ tickers = ['NVDA','ARM','AMD','MSFT']
 #Data manipulation
 
 # Selecting relevant columns from the data frame and scaling them 
-df_close_prices = yf.download(tickers, period = "6mo")['Adj Close']
+df_close_prices = yf.download(tickers, period = "6mo")['Close']
 df_volumes = yf.download(tickers, period = "6mo")['Volume']
 scalled_close_prices = df_close_prices / df_close_prices.iloc[0,:]
 scalled_volumes = df_volumes / df_volumes.iloc[0,:]
 
 #calculations
 # Calculating the daily change in precentages
-df_daily_returns = (df_close_prices.pct_change()* 100)
-df_rsi_result = calculate_rsi(df_close_prices)
+df_daily_returns = (df_close_prices.pct_change()* 100).fillna(0)
+
+df_rsi_result = calculate_rsi(df_close_prices).fillna(0)
 
 
 
@@ -62,7 +56,7 @@ df_rsi_result = calculate_rsi(df_close_prices)
 
 
 # Plotting close prices for all stocks 
-plotShow(scalled_close_prices, "Close Prices", "Date", "Price")
+plotShow(scalled_close_prices, "Closing Prices", "Date", "Price")
 
 #Plotting volume for each stock
 plotShow(scalled_volumes, "Volumes Traded", "Date", "Volume")
@@ -71,4 +65,4 @@ plotShow(scalled_volumes, "Volumes Traded", "Date", "Volume")
 plotShow(df_daily_returns, "Daily Returns", "Date", "Change in %")
 
 #Plotting RSI measure for each stock
-plotShow(df_rsi_result, "RSI in last 14 days", "Date", "Change in %")
+plotShow(df_rsi_result, "RSI measure", "Date", "RSI")
