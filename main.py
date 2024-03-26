@@ -39,4 +39,5 @@ utils.plotShow(df_daily_returns, "Daily Returns", "Date", "Change in %")
 #Plotting RSI measure for each stock
 utils.plotShow(df_rsi_result, "RSI measure", "Date", "RSI")
 
-utils.plotShow(df_moving_avg, f"Moving avg of last 50 days", "Date", "Moving avg")
+#Plotting the last 50 days Moving avg for each stock
+utils.plotShow(df_moving_avg,"Moving avg of last 50 days", "Date", "Moving avg")
