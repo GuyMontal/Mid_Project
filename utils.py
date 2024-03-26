@@ -9,7 +9,7 @@ def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (10, 5)):
         plt.xlabel(xlable_plt)
         plt.ylabel(ylabel_plt)
         plt.legend(list(data_item.columns))
-        plt.savefig(f"{title_plt}.png")
+        plt.savefig(f"Analysis/{title_plt}.png")
 
 def calculate_rsi(data, window=14):
    # Calculate price changes
@@ -30,3 +30,9 @@ def calculate_rsi(data, window=14):
     rsi = 100 - (100 / (1 + rs))
     
     return rsi
+
+# Calculate the 50-day moving average
+def ma(window,data):  
+    moving_avg_window = window
+    return data.rolling(window=moving_avg_window).mean()
+

@@ -20,6 +20,8 @@ df_daily_returns = (df_close_prices.pct_change()* 100).fillna(0)
 #calculating RSI measure which used for over/under bought 
 df_rsi_result = utils.calculate_rsi(df_close_prices).fillna(0)
 
+df_moving_avg = utils.ma(50, df_close_prices).dropna()
+
 
 
 #Visualization
@@ -36,3 +38,5 @@ utils.plotShow(df_daily_returns, "Daily Returns", "Date", "Change in %")
 
 #Plotting RSI measure for each stock
 utils.plotShow(df_rsi_result, "RSI measure", "Date", "RSI")
+
+utils.plotShow(df_moving_avg, f"Moving avg of last 50 days", "Date", "Moving avg")
