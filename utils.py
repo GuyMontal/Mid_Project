@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 tickers = ['NVDA','ARM']
 
-def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (2, 5)):
+def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (1, 1)):
         plt.figure(figsize=size)
         data_item.plot()
         plt.title(title_plt)
@@ -31,7 +31,7 @@ def calculate_rsi(data, window=14):
     
     return rsi
 
-# Calculate the 50-day moving average
+# Calculate the moving average with a set window of days
 def ma(window,data):  
     moving_avg_window = window
     return data.rolling(window=moving_avg_window).mean()
