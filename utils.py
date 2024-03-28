@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 
-tickers = ['NVDA','ARM']
-
 def plotShow(data_item, title_plt,xlable_plt,ylabel_plt,size = (1, 1)):
         plt.figure(figsize=size)
         data_item.plot()
