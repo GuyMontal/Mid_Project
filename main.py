@@ -28,11 +28,11 @@ def run_all(tickers,period):
 
 
         #Saving the stocks information to a CSV file 
-        df_close_prices.to_csv('Mid_Project_Stocks_Analysis/Analysis/Closing Prices.csv')
-        df_daily_returns.to_csv('Mid_Project_Stocks_Analysis/Analysis/Daily Change.csv')
-        df_rsi_result.to_csv('Mid_Project_Stocks_Analysis/Analysis/RSI Measure.csv')
-        df_moving_avg.to_csv('Mid_Project_Stocks_Analysis/Analysis/Moving avg.csv')
-        df_volumes.to_csv('Mid_Project_Stocks_Analysis/Analysis/Volume.csv')
+        df_close_prices.to_csv('Closing Prices.csv')
+        df_daily_returns.to_csv('Daily Change.csv')
+        df_rsi_result.to_csv('RSI Measure.csv')
+        df_moving_avg.to_csv('Moving avg.csv')
+        df_volumes.to_csv('Volume.csv')
 
         #Visualization
 

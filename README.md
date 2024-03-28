@@ -1,19 +1,12 @@
-Mid Project - The Pokédex
+Mid Project - Stock Analysis
 
-This project consists of a server-side Flask application running inside a Docker container and a client script that interacts with the server to fetch Pokémon data. The server exposes an API that allows clients to retrieve information about Pokémon by name.
+This project consists of downloading all the data for a selected period of time for multiple stocks.
 
-This project is a simple Pokémon information fetcher. It consists of a server that serves Pokémon data and a client that fetches and displays this data.
-Getting Started
+
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-Prerequisites
 
-    Python 3.11
-    pip
-    Flask
-    pandas
-    requests
-    prettytable (optional)
+
 
 Installing
 
