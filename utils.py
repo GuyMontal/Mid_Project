@@ -36,3 +36,4 @@ def ma(window,data):
     moving_avg_window = window
     return data.rolling(window=moving_avg_window).mean()
 
+
