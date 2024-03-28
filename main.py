@@ -53,7 +53,7 @@ def run_all(tickers,period):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Stocks")
-    parser.add_argument("--target_stocks", type=str, help="The stocks you want to analyze")
+    parser.add_argument("--target_stocks", type=list, help="The stocks you want to analyze")
     parser.add_argument("--Period", type=str, help="How long back")
 
     
